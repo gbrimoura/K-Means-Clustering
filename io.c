@@ -58,3 +58,53 @@ double *readCSV(const char *file, int *rows, int *cols)
 
     return data;
 }
+
+void writeCSV(
+        const char *file,
+        double *points,
+        int *labels,
+        int rows,
+        int cols,
+        double *centroids,
+        int K)
+{
+    FILE *fp = fopen(file, "w");
+
+    if(fp == NULL)
+        return;
+
+    /* Pontos e cluster */
+
+    fprintf(fp, "Ponto");
+
+    for(int j = 0; j < cols; j++)
+        fprintf(fp, ",X%d", j + 1);
+
+    fprintf(fp, ",Cluster\n");
+
+    for(int i = 0; i < rows; i++)
+    {
+        fprintf(fp, "%d", i);
+
+        for(int j = 0; j < cols; j++)
+            fprintf(fp, ",%.6f", points[i * cols + j]);
+
+        fprintf(fp, ",%d\n", labels[i]);
+    }
+
+    /* Centroides */
+
+    fprintf(fp, "\nCentroides\n");
+
+    for(int k = 0; k < K; k++)
+    {
+        fprintf(fp, "C%d", k);
+
+        for(int j = 0; j < cols; j++)
+            fprintf(fp, ",%.6f", centroids[k * cols + j]);
+
+        fprintf(fp, "\n");
+    }
+
+    fclose(fp);
+}
