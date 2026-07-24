@@ -2,5 +2,5 @@
 
 ## Instruções de execução
 
-compilar usando `make`
-executar usando `./executar`
+- compilar usando `make`
+- executar usando `./executar`
